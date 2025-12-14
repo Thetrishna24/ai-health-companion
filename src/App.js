@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { Calendar, Activity, Heart, MapPin, Clock, MessageSquare, Utensils, TrendingUp, Shield, Globe, Bell } from 'lucide-react';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+import Signin from './components/Signin'; 
+import Signup from './components/Signup';
+
+// A simple component for the home page (optional)
+const Home = () => <h1>Welcome to the App!</h1>;
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -35,6 +42,7 @@ function App() {
       ]);
       setUserInput('');
     }
+
   };
 
   const renderHome = () => (
@@ -332,6 +340,52 @@ function App() {
                   Confirm Booking
                 </button>
               </div>
+
+              <div className="flex gap-4">
+              <button 
+                onClick={() => setActiveTab('home')}
+                // ... existing activeTab logic ...
+              >
+                Home
+              </button>
+              {/* Keep the Healthcare and Nutrition buttons for the demo tabs */}
+              <button 
+                onClick={() => setActiveTab('healthcare')}
+                  // ... existing activeTab logic ...
+              >
+                Healthcare
+              </button>
+              <button 
+                onClick={() => setActiveTab('nutrition')}
+                // ... existing activeTab logic ...
+              >
+                Nutrition
+              </button>
+  
+              {/*  ADD SIGN-IN / SIGN-UP LINKS HERE  */}
+              <Link 
+                to="/signin" 
+                onClick={() => setActiveTab('signin')} // Set activeTab to 'signin' when clicked
+                className={`px-4 py-2 rounded-lg font-semibold transition ${
+                  activeTab === 'signin' 
+                    ? 'bg-red-100 text-red-700' // Use a different color to distinguish auth links
+                    : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Sign In
+            </Link>
+            <Link 
+              to="/signup" 
+              onClick={() => setActiveTab('signup')} // Set activeTab to 'signup' when clicked
+              className={`px-4 py-2 rounded-lg font-semibold transition ${
+                activeTab === 'signup' 
+                  ? 'bg-red-100 text-red-700' 
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              Sign Up
+            </Link>
+            </div>
             </div>
           </div>
         )}
@@ -553,6 +607,12 @@ function App() {
       {activeTab === 'home' && renderHome()}
       {activeTab === 'healthcare' && renderHealthcare()}
       {activeTab === 'nutrition' && renderNutrition()}
+      {/* 👇 ADD NEW CONDITIONS FOR AUTH PAGES 👇 */}
+      {activeTab === 'signin' && <Signin />}
+      {activeTab === 'signup' && <Signup />}
+      {/* 👆 END OF NEW CONDITIONS 👆 */}
+
+      <footer className="bg-gray-900 text-white py-12"></footer>
 
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-6">
